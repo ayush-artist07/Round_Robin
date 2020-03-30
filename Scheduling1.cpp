@@ -10,6 +10,31 @@
 #include<iostream> 
 using namespace std; 
 
+void time_constraint(int hh,int mm,int total_burst)
+{
+	if(hh<10 && hh>=12)
+	{
+		cout<<"Inappropriate Time"<<endl;
+		exit(0);
+	}
+	else if(mm>60)
+	{
+		cout<<"Inappropriate Time"<<endl;
+		exit(0);
+	}
+	else if(12<(hh+(mm+total_burst)/60))
+	{
+		cout<<"No of queries should be reduced else some of them will be half executed \nas total burst time goes beyond the time I am free"<<endl;
+		cout<<"Run the Programm Again";
+		exit(0);
+	}
+	else
+	{
+		cout<<endl;
+		cout<<"\t\t\t\t\t\tWelcome"<<endl;
+	}
+}
+
 
 void findWaitingTime(int processes[], int n, 
 			int bt[], int wt[], int quantum) 
@@ -82,12 +107,11 @@ void findavgTime(int processes[], int n, int bt[],
 	
 	findTurnAroundTime(processes, n, bt, wt, tat); 
 
-	// Display processes along with all details 
+	 
 	cout << "Processes "<< " Burst time "
 		<< " Waiting time " << " Turn around time\n"; 
 
-	// Calculate total waiting time and total turn 
-	// around time 
+	 
 	for (int i=0; i<n; i++) 
 	{ 
 		total_wt = total_wt + wt[i]; 
@@ -113,13 +137,15 @@ void inst(){
 	
 int main() 
 {	
+	
 	int siz_query,stu_fac,burst_time[siz_query],sum=0,h,m; 
 	char c;
 	
 	inst();
 	
 	cout<<"Enter the time when the first query was reported:  ";
-	cin>>h>>c>>m; 
+	cin>>h>>c>>m;
+	time_constraint(h,m,sum);
 	cout<<"Enter the number of processes: ";
 	cin>>siz_query;
 	cout<<endl;
@@ -142,7 +168,9 @@ int main()
 	cout<<"Quantum Time for each Process ";
 	cin>>quantum;
 	cout<<endl;
-	findavgTime(processes, n, burst_time, quantum); 
+	findavgTime(processes, n, burst_time, quantum);
+	cout<<endl;
+	cout<<"Total Time Spent = "<<sum;
 	return 0; 
 } 
 
